@@ -18,12 +18,20 @@ A basic phishing site might mimic the login page for some popular web applicatio
 
 ## Implementation Details
 
-* Use Django
-* Call get_html package, retrive HTML of target site
-* Save HTLM into templates
-* render HTML webpage
-* find login form within html (grep for "sign in" or "log in"-esque form id names), change its onsubmit behavior to run our custom function which stores input field values before sending to the actual site
+* Set up simple django website
+* Retrieve and save HTML of target website using Python requests package (Use request.session() to keep session open while we get user's credentials)
+* Alter HTML (HTML_1) so that submitting login form calls custom function (find login form within html (grep for "sign in" or "log in"-esque form id names), change its onsubmit behavior to run our custom function which stores input field values before sending to the actual site)
+  * Fetch and save login credentials from params
+  * Send params to target website login using requests library (post request)
+  * Save HTML response from target website once first stage login complete
+  * Alter this new HTML response (HTML_2) similarly so that submitting form calls second custom function to fetch and save 2FA authentication code
+    * Send code to target website
+    * Should be logged in once this function executes
+* Render HTML_1 page to user
+
+
 
 Need to figure out how to dynamically link form to each unique website's html
 
-* picked apple, BofA websites to try and get a working product on at first, may try to extend to be more general later
+* Picked BofA website to try and get a working product on at first (Are there any simple 2FA websites?)
+* Some websites like Apple, Amazon use some technique on sign in page preventing us from simply duplicating the HTML and displaying it.
