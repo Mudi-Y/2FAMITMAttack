@@ -24,9 +24,9 @@ A basic phishing site might mimic the login page for some popular web applicatio
    * Record session ID for next access to target website
    * Save HTML response from target website once first stage login complete
    * Alter this new HTML response (HTML_2) similarly so that submitting form calls second custom function to fetch and save 2FA authentication code
-    * Send code to target website
-    * Access target website using session ID from first access and send code to target website
-    * Should be logged in once this function executes
+     * Send code to target website
+     * Access target website using session ID from first access and send code to target website
+     * Should be logged in once this function executes
  * Render HTML_1 page to user
 
 
