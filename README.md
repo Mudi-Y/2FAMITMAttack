@@ -22,6 +22,7 @@ A basic phishing site might mimic the login page for some popular web applicatio
 * Call get_html package, retrive HTML of target site
 * Save HTLM into templates
 * render HTML webpage
+* find login form within html (grep for "sign in" or "log in"-esque form id names), change its onsubmit behavior to run our custom function which stores input field values before sending to the actual site
 
 Need to figure out how to dynamically link form to each unique website's html
 
