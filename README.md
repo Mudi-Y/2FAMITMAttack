@@ -14,3 +14,15 @@ A basic phishing site might mimic the login page for some popular web applicatio
 7. Intercept user's request with second login credentials.
 8. Enter stolen credentials in target website's login form. => If 2FA, should fully authenticate us.
 9. (Optional) Display duplicated successful login page back to user.
+
+
+## Implementation Details
+
+* Use Django
+* Call get_html package, retrive HTML of target site
+* Save HTLM into templates
+* render HTML webpage
+
+Need to figure out how to dynamically link form to each unique website's html
+
+* picked apple, BofA websites to try and get a working product on at first, may try to extend to be more general later
