@@ -35,4 +35,9 @@ A basic phishing site might mimic the login page for some popular web applicatio
 
 * Need to figure out how to dynamically link form to each unique website's html
 * How to "click" button with python script: might need to use Selenium
-  * How to get URL of redirect page after clicking button? 
+  * How to get URL of redirect page after clicking button?
+
+## Notes
+* Dynamically rewrite links => Rewrite to [your ip address]/path and create path in django project
+* Don't choose site with too much JS
+* Take request to your website from user and forward request to target website using requests library
