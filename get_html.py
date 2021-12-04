@@ -36,16 +36,23 @@ class RequestManager:
 
     def getRequest(self, req:Req, site):
         "send a get HTML request to a destination site, and log"
-        pass
+        r = requests.get(site, auth=req.auth, cookies=req.auth, params=req.params)
+        self._logRequest(r.request)
+        self._logRequest(r)
+        return r
 
 
     def postRequest(self, req:Req, site):
         "send a post HTML request to a destination site"
-        pass
+        r = requests.post(site, auth=req.auth, cookies=req.auth, params=req.params)
+        self._logRequest(r.request)
+        self._logRequest(r)
+        return r
 
 
     def cookieRequest(self, req:Req, site):
         "get all the cookies from the site"
-        pass
-
-
+        r = requests.get(site, auth=req.auth, cookies=req.auth, params=req.params)
+        self._logRequest(r.request)
+        self._logRequest(r)
+        return r.cookies
