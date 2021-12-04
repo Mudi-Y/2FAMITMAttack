@@ -41,3 +41,8 @@ A basic phishing site might mimic the login page for some popular web applicatio
 * Dynamically rewrite links => Rewrite to [your ip address]/path and create path in django project
 * Don't choose site with too much JS
 * Take request to your website from user and forward request to target website using requests library
+
+## Tasks
+1. Script to rewrite all links to point to urls in our website + Create the pages in our website (Rina)
+2. Write function to get user parameters submitted to our webpage and send to matching target website and displaying returned value (using requests library) + Log all user parameters (Mudi + Christine)
+
