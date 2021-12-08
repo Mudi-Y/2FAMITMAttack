@@ -3,18 +3,19 @@ import requests
 class Req:
     "wrapper reqeust object, used for sending and receiving HTML request via \
     RequestManager object"
-    def __init__(self, siteurl, auth=(), cookies={}, params={}):
+    def __init__(self, siteurl, auth=(), cookies={}, params={}, data={}):
         self.siteurl = siteurl
         self.auth = auth
         self.cookies = cookies
         self.params = params
+        self.data = data
 
 
 class RequestManager:
     "request manager that wraps all functionality of requests"
     def __init__(self, home_url):
         self.home = home_url
-        self.log = []
+        self.log = []  # list containing all requests and responses sent/received by the manager object
 
     def getHtml(self, site_url, output_file="out.txt"):
         "takes url and path to outfile, saves html of site to outfile"
@@ -80,7 +81,7 @@ class RequestManager:
     def postRequest(self, req:Req):
         "send a post HTML request to a destination site, and log request and response. \
         returns response"
-        r = requests.post(req.siteurl, auth=req.auth, cookies=req.cookies, params=req.params)
+        r = requests.post(req.siteurl, auth=req.auth, cookies=req.cookies, params=req.params, data=req.data)
         self._logRequest(r.request)
         self._logRequest(r)
         return r
