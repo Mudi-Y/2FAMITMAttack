@@ -2,9 +2,9 @@ from django.http import HttpResponse
 from bs4 import BeautifulSoup as bs
 from urllib.parse import urljoin
 import requests
-import sys
 import os
 import textwrap
+from .global_vars import SESSION
 
 # Script to parse html of target website
 # For script, img, stylesheet links, add base url to the start
@@ -40,7 +40,7 @@ def parse_html(html, base_url):
             # Process link
             link = a.attrs.get("href")
             #Ignore external links and non-relevant hrefs
-            if link[0] != '/' or any(c in link for c in ['.', '?', '+']):
+            if link == '/' or link[0] != '/' or any(c in link for c in ['.', '?', '+']):
                 continue
             path = link[1:] + '/'
             func_name = path.replace('/', '_').replace('-', '_')[:-1]
@@ -76,28 +76,28 @@ def parse_html(html, base_url):
 
 # Function to get content from url and display HTTP response after parsing links
 def display_view(url):
-    # initialize a session
-    session = requests.Session()
-    # set the User-agent as a regular browser
-    session.headers["User-Agent"] = "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/44.0.2403.157 Safari/537.36"
-    res = session.get(url)
+    global SESSION
+    res = SESSION.get(url)
     html = res.content
-
     parsed_html = parse_html(html, url)
-
     # Parse HTML before returning
     return HttpResponse(str(parsed_html))
 
+# Initialize requests session and save cookie dict as global variable
+def startup():
+    global SESSION, COOKIE_DICT
+    # initialize a session
+    SESSION = requests.Session()
+    # set the User-agent as a regular browser
+    SESSION.headers["User-Agent"] = "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/44.0.2403.157 Safari/537.36"
+    SESSION.get('https://www.wechall.net/') #Access website to get session cookie
 
-if __name__ == "__main__":
-    url = 'https://www.wechall.net/'
-    ofile = sys.argv[1]
-
-    req = requests.get(url)
-    html_out = parse_html(req.content, url)
-
-    with open(ofile, 'w') as f:
-        f.write(str(html_out))
-        f.close()
-
+def login_post(url, data):
+    global SESSION
+    res = SESSION.post(url, data=data)
+    # url = 'https://www.wechall.net/welcome'
+    # res = SESSION.get(url)
+    html = res.content
+    parsed_html = parse_html(html, url)
+    return HttpResponse(str(parsed_html))
 
