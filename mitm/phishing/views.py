@@ -11,6 +11,4 @@ def index(request):
 @csrf_exempt
 def login(request):
     url = 'https://www.wechall.net/login'
-    # data = {"username": request.POST.get("username"), "password": request.POST.get("password")}
-    # print("Data: ", data)
     return login_post(url, request.POST)

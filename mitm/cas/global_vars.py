@@ -1,5 +1,7 @@
 # Global variables
 
-# requests library session initialized on start
+# Requests library session initialized on start
 SESSION = None
-manager = None
+
+# Manager object to log requests and responses
+MANAGER = None

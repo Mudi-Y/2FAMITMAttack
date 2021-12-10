@@ -6,17 +6,18 @@ import os
 import textwrap
 from .get_html import RequestManager
 
+from .global_vars import SESSION, MANAGER
 
 # Initialize requests session and save cookie dict as global variable
 def startup():
-    global SESSION
+    global SESSION, MANAGER
     # initialize a session
     SESSION = requests.Session()
     # set the User-agent as a regular browser
     SESSION.headers["User-Agent"] = "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/44.0.2403.157 Safari/537.36"
-    SESSION.get('https://secure.its.yale.edu/cas/login') #Access website to get session cookie
-    global manager
-    manager = RequestManager()
+    SESSION.get('https://secure.its.yale.edu/cas/login?service=https%3A%2F%2Fyale.instructure.com%2Flogin%2Fcas') #Access website to get session cookie
+    # Initialize manager object for logging
+    MANAGER = RequestManager()
 
 # Script to parse html of target website
 # For script, img, stylesheet links, add base url to the start
@@ -84,13 +85,13 @@ def parse_html(html, base_url):
 
 # Function to get content from url and display HTTP response after parsing links
 def display_view(url):
-    global SESSION
-    global manager
+    global SESSION, MANAGER
     res = SESSION.get(url)
-    manager.logRequest(res.request)
-    manager.logRequest(res)
-    manager.showRequests()
-    manager.log = []
+    # Log request and response
+    MANAGER.logRequest(res.request)
+    MANAGER.logRequest(res)
+    MANAGER.showRequests()
+    MANAGER.log = []
     html = res.content
     parsed_html = parse_html(html, url)
     # Parse HTML before returning
@@ -98,13 +99,13 @@ def display_view(url):
 
 # Function to login by sending data as post request to url
 def login_post(url, data):
-    global SESSION
-    global manager
+    global SESSION, MANAGER
     res = SESSION.post(url, data=data)
-    manager.logRequest(res.request)
-    manager.logRequest(res)
-    manager.showRequests()
-    manager.log = []
+    # Log request and response
+    MANAGER.logRequest(res.request)
+    MANAGER.logRequest(res)
+    MANAGER.showRequests()
+    MANAGER.log = []
     html = res.content
     parsed_html = parse_html(html, url)
     return HttpResponse(str(parsed_html))
