@@ -59,7 +59,6 @@ def parse_html(html, base_url):
                 f.close()
 
             # Create function in views.py
-            # TODO: If already exists, don't create
             with open(os.path.join(script_dir, "views.py"), "r+") as f:
                 lines = f.readlines()
                 query = f"def {func_name}(request):\n"
@@ -88,20 +87,18 @@ def display_view(url):
 
 # Initialize requests session and save cookie dict as global variable
 def startup():
-    global SESSION, COOKIE_DICT
+    global SESSION
     # initialize a session
     SESSION = requests.Session()
     # set the User-agent as a regular browser
     SESSION.headers[
         "User-Agent"] = "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/44.0.2403.157 Safari/537.36"
-    SESSION.get('https://www.wechall.net/')  # Access website to get session cookie
+    SESSION.get('https://evernote.com/')  # Access website to get session cookie
 
 
 def login_post(url, data):
     global SESSION
     res = SESSION.post(url, data=data)
-    # url = 'https://www.wechall.net/welcome'
-    # res = SESSION.get(url)
     html = res.content
     parsed_html = parse_html(html, url)
     return HttpResponse(str(parsed_html))

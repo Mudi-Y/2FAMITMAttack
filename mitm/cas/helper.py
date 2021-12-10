@@ -80,9 +80,6 @@ def parse_html(html, base_url):
                             return display_view(url)
                             '''))
                 f.close()
-
-            # a['href'] = path[:-1]
-    
     return soup
 
 # Function to get content from url and display HTTP response after parsing links
@@ -98,6 +95,7 @@ def display_view(url):
     # Parse HTML before returning
     return HttpResponse(str(parsed_html))
 
+# Function to login by sending data as post request to url
 def login_post(url, data):
     global SESSION
     global manager
