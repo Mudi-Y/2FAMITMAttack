@@ -4,6 +4,7 @@ from urllib.parse import urljoin
 import requests
 import os
 import textwrap
+from .get_html import RequestManager
 from .global_vars import SESSION
 
 # Script to parse html of target website
@@ -81,6 +82,12 @@ def display_view(url):
     html = res.content
     parsed_html = parse_html(html, url)
     # Parse HTML before returning
+
+    global manager
+    manager.logRequest(res.request)
+    manager.logRequest(res)
+    manager.showRequests()
+
     return HttpResponse(str(parsed_html))
 
 # Initialize requests session and save cookie dict as global variable
@@ -91,6 +98,9 @@ def startup():
     # set the User-agent as a regular browser
     SESSION.headers["User-Agent"] = "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/44.0.2403.157 Safari/537.36"
     SESSION.get('https://www.wechall.net/') #Access website to get session cookie
+    global manager
+    manager = RequestManager()
+    manager.log = []
 
 def login_post(url, data):
     global SESSION
@@ -99,5 +109,12 @@ def login_post(url, data):
     # res = SESSION.get(url)
     html = res.content
     parsed_html = parse_html(html, url)
+
+    global manager
+    manager.logRequest(res.request)
+    manager.logRequest(res)
+    manager.showRequests()
+    manager.log = []
+
     return HttpResponse(str(parsed_html))
 
