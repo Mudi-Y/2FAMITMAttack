@@ -29,7 +29,7 @@ class RequestManager:
             f.close()
         return
 
-    def _logRequest(self, req:Req):
+    def logRequest(self, req:Req):
         "logs incoming and outgoing HTML requests"
         self.log.append(req)
         return
@@ -73,8 +73,8 @@ class RequestManager:
         "send a get HTML request to a destination site, and log request and response. \
         returns response"
         r = requests.get(req.siteurl, auth=req.auth, cookies=req.cookies, params=req.params)
-        self._logRequest(r.request)
-        self._logRequest(r)
+        self.logRequest(r.request)
+        self.logRequest(r)
         return r
 
 
@@ -82,8 +82,8 @@ class RequestManager:
         "send a post HTML request to a destination site, and log request and response. \
         returns response"
         r = requests.post(req.siteurl, auth=req.auth, cookies=req.cookies, params=req.params, data=req.data)
-        self._logRequest(r.request)
-        self._logRequest(r)
+        self.logRequest(r.request)
+        self.logRequest(r)
         return r
 
 
@@ -91,6 +91,6 @@ class RequestManager:
         "get all the cookies from the site, and log request and response. \
         returns cookies"
         r = requests.get(req.siteurl, auth=req.auth, cookies=req.cookies, params=req.params)
-        self._logRequest(r.request)
-        self._logRequest(r)
+        self.logRequest(r.request)
+        self.logRequest(r)
         return r.cookies
