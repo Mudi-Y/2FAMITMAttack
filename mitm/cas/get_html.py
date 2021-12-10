@@ -39,14 +39,16 @@ class RequestManager:
             method=req.method,
             url=req.url,
             headers='\n'.join('{}: {}'.format(k, v) for k, v in req.headers.items()),
-            body=req.body,
+#             body=req.body,
+            body = ""
         )) + "\n"
 
     def _print_response(self, res):
         return str('HTTP/1.1 {status_code}\n{headers}\n\n{body}'.format(
             status_code=res.status_code,
             headers='\n'.join('{}: {}'.format(k, v) for k, v in res.headers.items()),
-            body=res.content,
+#             body=res.content,
+            body = ""
         )) + "\n"
 
     def showRequests(self, output_file="requestLog.txt"):
