@@ -1,10 +1,12 @@
-`1 from django.http import HttpResponse
+`1
+from django.http import HttpResponse
 from bs4 import BeautifulSoup as bs
 from urllib.parse import urljoin
 import requests
 import os
 import textwrap
 from .global_vars import SESSION
+
 
 # Script to parse html of target website
 # For script, img, stylesheet links, add base url to the start
@@ -26,7 +28,7 @@ def parse_html(html, base_url):
         if css.attrs.get("href"):
             # if the link tag has the 'href' attribute
             css['href'] = urljoin(base_url, css.attrs.get("href"))
-    
+
     # Add domain name to image files
     for img in soup.find_all("img"):
         if img.attrs.get("src"):
@@ -39,7 +41,7 @@ def parse_html(html, base_url):
         if a.attrs.get("href"):
             # Process link
             link = a.attrs.get("href")
-            #Ignore external links and non-relevant hrefs
+            # Ignore external links and non-relevant hrefs
             if link == '/' or link[0] != '/' or any(c in link for c in ['.', '?', '+']):
                 continue
             path = link[1:] + '/'
@@ -71,8 +73,9 @@ def parse_html(html, base_url):
                 f.close()
 
             # a['href'] = path[:-1]
-    
+
     return soup
+
 
 # Function to get content from url and display HTTP response after parsing links
 def display_view(url):
@@ -83,14 +86,17 @@ def display_view(url):
     # Parse HTML before returning
     return HttpResponse(str(parsed_html))
 
+
 # Initialize requests session and save cookie dict as global variable
 def startup():
     global SESSION, COOKIE_DICT
     # initialize a session
     SESSION = requests.Session()
     # set the User-agent as a regular browser
-    SESSION.headers["User-Agent"] = "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/44.0.2403.157 Safari/537.36"
-    SESSION.get('https://www.wechall.net/') #Access website to get session cookie
+    SESSION.headers[
+        "User-Agent"] = "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/44.0.2403.157 Safari/537.36"
+    SESSION.get('https://www.wechall.net/')  # Access website to get session cookie
+
 
 def login_post(url, data):
     global SESSION
