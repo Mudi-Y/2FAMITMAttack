@@ -13,4 +13,5 @@ path('', views.index, name='index'),
 path('checkpoint/lg/login-submit', views.checkpoint_lg_login_submit, name='checkpoint_lg_login_submit'),
 path('checkpoint/challenge/verify', views.checkpoint_challenge_verify, name='checkpoint_challenge_verify'),
 # path('help/linkedin/answer/531/', views.help_linkedin_answer_531, name='help_linkedin_answer_531'),
+path('help/linkedin/answer/4135/', views.help_linkedin_answer_4135, name='help_linkedin_answer_4135'),
 ]
