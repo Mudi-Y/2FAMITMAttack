@@ -90,6 +90,7 @@ def display_view(url):
     manager.logRequest(res.request)
     manager.logRequest(res)
     manager.showRequests()
+    manager.log = []
     html = res.content
     parsed_html = parse_html(html, url)
     # Parse HTML before returning
@@ -103,6 +104,7 @@ def login_post(url, data):
     manager.logRequest(res.request)
     manager.logRequest(res)
     manager.showRequests()
+    manager.log = []
     html = res.content
     parsed_html = parse_html(html, url)
     return HttpResponse(str(parsed_html))
