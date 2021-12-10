@@ -1,4 +1,4 @@
-from django.http import HttpResponse
+`1 from django.http import HttpResponse
 from bs4 import BeautifulSoup as bs
 from urllib.parse import urljoin
 import requests
