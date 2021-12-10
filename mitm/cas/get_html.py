@@ -13,7 +13,7 @@ class Req:
 
 class RequestManager:
     "request manager that wraps all functionality of requests"
-    def __init__(self, home_url):
+    def __init__(self, home_url=""):
         self.home = home_url
         self.log = []  # list containing all requests and responses sent/received by the manager object
 
@@ -54,7 +54,8 @@ class RequestManager:
         spacerRequest = "\n==========[ Request ]==========\n"
         spacerResponse = "\n==========[ Response ]==========\n"
 
-        with open(output_file, 'w') as f:
+        with open(output_file, 'a') as f:
+            f.write('\n')
             for req in self.log:
                 # formatting if req is a Response
                 if isinstance(req, requests.models.PreparedRequest):
@@ -94,3 +95,4 @@ class RequestManager:
         self.logRequest(r.request)
         self.logRequest(r)
         return r.cookies
+
