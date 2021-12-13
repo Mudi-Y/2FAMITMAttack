@@ -1,4 +1,4 @@
-# ReadMe for Subnission
+# ReadMe for Submission
 Our project was the mitm 2fa phishing site. The github repo can be found [here.](https://github.com/rinakawamura/2FAMITMAttack).
 Our code is split into three modules (cas, linkedin, and wechall) corresponding to the websites they target, but in actuality, much of the code within
 each module is the same. We created these divisions because our code dynamically creates URLs and views (as necessary for Django) and this helped with organization
@@ -10,6 +10,8 @@ and debugging. If the main target url in each module is changed to that of anoth
 * helper.py provides the main functionality of this project. Firstly, it crawls the target website and creates 'fake' pages with the same content for each link. Additonally, this file also handles all requests and responses being ferried between the victim and the target website. 
 
 * urls.py provides mappings to pages created through crawling. These link mappings and the corresponding views are dynamically created by helper.py.  
+
+===========================The items below this point are notes we made during the project===========================
 
 # Instructions
 Man-in-the-middle phishing site
