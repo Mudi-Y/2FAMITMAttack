@@ -1,5 +1,5 @@
 # ReadMe for Submission
-Our project was the mitm 2fa phishing site. The github repo can be found [here.](https://github.com/rinakawamura/2FAMITMAttack).
+Our project was the mitm 2fa phishing site. The github repo can be found [here](https://github.com/rinakawamura/2FAMITMAttack).
 Our code is split into three modules (cas, linkedin, and wechall) corresponding to the websites they target, but in actuality, much of the code within
 each module is the same. We created these divisions because our code dynamically creates URLs and views (as necessary for Django) and this helped with organization
 and debugging. If the main target url in each module is changed to that of another, the modified module should still function correctly with the new target site.
