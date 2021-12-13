@@ -1,3 +1,16 @@
+# ReadMe for Subnission
+Our project was the mitm 2fa phishing site. The github repo can be found [here.](https://github.com/rinakawamura/2FAMITMAttack).
+Our code is split into three modules (cas, linkedin, and wechall) corresponding to the websites they target, but in actuality, much of the code within
+each module is the same. We created these divisions because our code dynamically creates URLs and views (as necessary for Django) and this helped with organization
+and debugging. If the main target url in each module is changed to that of another, the modified module should still function correctly with the new target site.
+
+## Some highlights of our code:
+* get_html.py provides functionality for logging request and response headers as well as html code. For the deployed projects, we used some of the functions in this module to only log headers for requests and responses. 
+
+* helper.py provides the main functionality of this project. Firstly, it crawls the target website and creates 'fake' pages with the same content for each link. Additonally, this file also handles all requests and responses being ferried between the victim and the target website. 
+
+* urls.py provides mappings to pages created through crawling. These link mappings and the corresponding views are dynamically created by helper.py.  
+
 # Instructions
 Man-in-the-middle phishing site
 A basic phishing site might mimic the login page for some popular web application, but with the login form sending credentials back to the attacker.  This can be potent, but 2FA can help solve the problem by making it difficult for the attacker to get into your account even after stealing the credentials.  However, instead of a static phishing site you will make a tool to run a more sophisticated phishing attack capable of bypassing 2FA.  The trick is to mimic not just one page, but all the normal interaction with the site by acting as a man-in-the-middle to the real site.  When the user enters their credentials, you can pass them on to the server.  Then when the server asks for the 2FA code, you show that to the user as well.  To keep this going you will have to do some clever rewriting of parts of the page.  Once they enter it you can pass it along to the server to complete the authentication and steal the resulting session cookie.  Ideally you should try to make this tool general enough that you can set any target server in a configuration file.  If you do not achieve that, you should at least have it working on two sites where you can demonstrate it working with dummy accounts.  Remember that this is dealing with live ammunition and you must not deploy this tool publicly or use it to hack anyone but yourself.
