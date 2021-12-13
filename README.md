@@ -4,12 +4,23 @@ Our code is split into three modules (cas, linkedin, and wechall) corresponding 
 each module is the same. We created these divisions because our code dynamically creates URLs and views (as necessary for Django) and this helped with organization
 and debugging. If the main target url in each module is changed to that of another, the modified module should still function correctly with the new target site.
 
-## Some highlights of our code:
+## Some highlights of our code (these files exist in every module):
 * get_html.py provides functionality for logging request and response headers as well as html code. For the deployed projects, we used some of the functions in this module to only log headers for requests and responses. 
 
-* helper.py provides the main functionality of this project. Firstly, it crawls the target website and creates 'fake' pages with the same content for each link. Additonally, this file also handles all requests and responses being ferried between the victim and the target website. 
+* helper.py provides the main functionality of this project. 
+  * starup initializes a session for the Python requests library and records the session as a global variable. 
+  * parse_html goes through some html text and creates absolute links for the stylesheets, images, and script files, as well as dynamically create functions in views.py and urls in urls.py for every 'href' link in the page.
+  * display_view is a function that is called for every get request to some url. It fetches the content from the target url, parses the html using parse_html and displays it
+  * login_post is the function to login by sending post request data to the target url, retrieving the page's content, parsing it, and displaying it to the page.
 
+* views.py contains the functions for each page of the target website that is accessed, and either sends get or post requests to the website and displays the contents to the user. All requests and responses are logged in this process.
 * urls.py provides mappings to pages created through crawling. These link mappings and the corresponding views are dynamically created by helper.py.  
+
+## Future Improvements
+* Implement wildcard views
+* Make changes to get_html such that other links are dynamically rewritten, such as the form actions since this is currently written manually, and so cannot be applied across different websites
+* Make code more generic and applicable to other websites. Re-organize code such that there is only one module with the code, i.e. helper.py, views.py, urls.py, get_html.py, and make target website an editable command line argument to program.
+
 
 ===========================The items below this point are notes we made during the project===========================
 
